@@ -35,4 +35,5 @@ Cargo.lock
 *.pdb
 
 # Ignore the input files
-*input.*
+example_input.txt
+input.txt

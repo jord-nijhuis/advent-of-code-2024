@@ -6,7 +6,7 @@ fn get_lists(input: &str) -> (Vec<i32>, Vec<i32>) {
     let mut second_list = Vec::new();
 
     for line in read_to_string(input).unwrap().lines() {
-        let mut split = line.split("   ");
+        let mut split = line.split_whitespace();
         first_list.push(split.next().unwrap().parse().unwrap());
         second_list.push(split.next().unwrap().parse().unwrap());
     }
@@ -18,25 +18,20 @@ fn get_lists(input: &str) -> (Vec<i32>, Vec<i32>) {
 }
 
 fn get_distance(first_list: &Vec<i32>, second_list: &Vec<i32>) -> i32 {
-    let mut distance = 0;
-
-    for (first, second) in first_list.iter().zip(second_list.iter()) {
-        distance += i32::abs(second - first);
-    }
-
-    distance
+    first_list
+        .iter()
+        .zip(second_list.iter())
+        .fold(0, |acc, (first, second)| {
+            acc + (second - first).abs()
+        })
 }
 
 fn get_similarity(first_list: &Vec<i32>, second_list: &Vec<i32>) -> i32 {
-    let mut similiarity = 0;
-
-    for first in first_list.iter() {
-        let occurrence = second_list.iter().filter(|&x| x == first).count() as i32;
-        similiarity += first * occurrence;
-
-    }
-
-    similiarity
+    first_list
+        .iter()
+        .fold(0, |acc, x| {
+            acc + x * second_list.iter().filter(|&y| y == x).count() as i32
+        })
 }
 
 fn main() {
