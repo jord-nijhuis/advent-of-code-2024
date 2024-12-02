@@ -22,15 +22,13 @@ fn get_reports(input: &str) -> Vec<Vec<i32>> {
 }
 
 fn is_safe(report: &Vec<i32>) -> bool {
-    for i in 0..report.len() {
+    for i in 1..report.len() {
         // Check that the difference between the current and the previous report is between -3 and 3
         // 0 is not allowed
-        if i >= 1 {
-            let difference = report[i] - report[i - 1];
+        let difference = (report[i] - report[i - 1]).abs();
 
-            if difference < -3 || difference > 3 || difference == 0 {
-                return false;
-            }
+        if difference > 3 || difference == 0 {
+            return false;
         }
 
         // Check that the report is not increasing and decreasing at the same time
