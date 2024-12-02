@@ -21,7 +21,7 @@ fn get_reports(input: &str) -> Vec<Vec<i32>>
         .collect()
 }
 
-fn is_save(report: &Vec<i32>) -> bool
+fn is_safe(report: &Vec<i32>) -> bool
 {
     for i in 0 ..report.len()
     {
@@ -47,11 +47,11 @@ fn is_save(report: &Vec<i32>) -> bool
     true
 }
 
-fn get_save_number_of_reports(reports: &Vec<Vec<i32>>) -> usize
+fn get_safe_number_of_reports(reports: &Vec<Vec<i32>>) -> usize
 {
     reports
         .iter()
-        .filter(|x| is_save(x))
+        .filter(|x| is_safe(x))
         .count()
 }
 
@@ -61,13 +61,13 @@ fn get_tolerable_number_of_reports(reports: &Vec<Vec<i32>>) -> usize
         .iter()
         .filter(|x| {
             // Remove one value from the report at a time and check if the report is valid
-            let mut save = false;
+            let mut safe = false;
 
             for i in 0.. x.len() {
-                save = is_save(&remove_index(x, i));
+                safe = is_safe(&remove_index(x, i));
 
-                if save {
-                    return save;
+                if safe {
+                    return safe;
                 }
             }
 
@@ -82,7 +82,7 @@ fn main() {
 
     let reports = get_reports(input);
 
-    println!("Save reports: {}", get_save_number_of_reports(&reports));
+    println!("Safe reports: {}", get_safe_number_of_reports(&reports));
 
     println!("Tolerable reports: {}", get_tolerable_number_of_reports(&reports));
 }
